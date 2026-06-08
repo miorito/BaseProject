@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './Login.css';
 
-export default function Login() {
+export default function Login({ onNavigateRegister }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -109,6 +109,13 @@ export default function Login() {
             {loading ? 'Signing in…' : 'Sign in'}
           </button>
         </form>
+
+        <p className="auth-link">
+          Don&apos;t have an account?{' '}
+          <button type="button" className="link-button" onClick={onNavigateRegister}>
+            Register
+          </button>
+        </p>
       </div>
     </div>
   );

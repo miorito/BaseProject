@@ -5,17 +5,12 @@ import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
 
 const require = createRequire(import.meta.url);
-const users = require('../api/users.json');
+const { findUserByEmail, registerUser } = require('../api/lib/usersStore.cjs');
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = process.env.PORT || 3001;
 const isProduction = process.env.NODE_ENV === 'production';
-
-function findUserByEmail(email) {
-  const normalized = email.trim().toLowerCase();
-  return users.find((user) => user.email.toLowerCase() === normalized) ?? null;
-}
 
 app.use(cors());
 app.use(express.json());
@@ -37,6 +32,26 @@ app.post('/api/login', (req, res) => {
     success: true,
     message: 'Login successful',
     user: { email: user.email, name: user.name },
+  });
+});
+
+app.post('/api/register', (req, res) => {
+  const { first_name, last_name, email, password } = req.body ?? {};
+
+  if (!first_name?.trim() || !last_name?.trim() || !email?.trim() || !password) {
+    return res.status(400).json({ success: false, message: 'All fields are required' });
+  }
+
+  const result = registerUser({ first_name, last_name, email, password });
+
+  if (result.error) {
+    return res.status(409).json({ success: false, message: result.error });
+  }
+
+  return res.status(201).json({
+    success: true,
+    message: 'Registration successful',
+    user: { email: result.user.email, name: result.user.name },
   });
 });
 

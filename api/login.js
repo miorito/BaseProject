@@ -1,9 +1,4 @@
-const users = require('./users.json');
-
-function findUserByEmail(email) {
-  const normalized = email.trim().toLowerCase();
-  return users.find((user) => user.email.toLowerCase() === normalized) ?? null;
-}
+const { findUserByEmail } = require('./lib/usersStore.cjs');
 
 module.exports = async (req, res) => {
   if (req.method === 'OPTIONS') {

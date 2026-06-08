@@ -82,6 +82,15 @@ function parseUsers(sql) {
 }
 
 const sql = fs.readFileSync(sqlPath, 'utf8');
-const users = parseUsers(sql);
+const sqlUsers = parseUsers(sql);
+const sqlEmails = new Set(sqlUsers.map((user) => user.email.toLowerCase()));
+
+let customUsers = [];
+if (fs.existsSync(outPath)) {
+  const existing = JSON.parse(fs.readFileSync(outPath, 'utf8'));
+  customUsers = existing.filter((user) => !sqlEmails.has(user.email.toLowerCase()));
+}
+
+const users = [...sqlUsers, ...customUsers];
 fs.writeFileSync(outPath, JSON.stringify(users, null, 2));
 console.log(`Generated ${users.length} users -> api/users.json`);
