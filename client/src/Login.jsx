@@ -123,6 +123,12 @@ export default function Login({ onNavigateRegister }) {
           </button>
         </div>
 
+        <div className="auth-link">
+          <button type="button" className="link-button">
+          <a href="https://www.google.com">About us</a>
+          </button>
+        </div>
+
       </div>
     </div>
   );
