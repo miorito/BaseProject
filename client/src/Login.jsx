@@ -24,7 +24,11 @@ export default function Login() {
 
       if (res.ok && data.success) {
         setLoggedIn(true);
-        setMessage({ type: 'success', text: data.message });
+        setMessage({
+          type: 'success',
+          text: data.message,
+          userName: data.user?.name || email,
+        });
       } else {
         setMessage({ type: 'error', text: data.message || 'Login failed' });
       }
@@ -40,7 +44,9 @@ export default function Login() {
       <div className="login-page">
         <div className="login-card">
           <h1>Welcome back</h1>
-          <p className="success-text">You are logged in as {email}</p>
+          <p className="success-text">
+            You are logged in as {message?.userName || email}
+          </p>
           <button
             type="button"
             className="btn-secondary"
@@ -98,7 +104,9 @@ export default function Login() {
           </button>
         </form>
 
-        <p className="hint">Demo: user@example.com / password123</p>
+        <p className="hint">
+          Use credentials from TEST_USER_DATA.sql (e.g. lrignold0@a8.net)
+        </p>
       </div>
     </div>
   );
