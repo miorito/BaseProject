@@ -109,10 +109,6 @@ export default function Login() {
             {loading ? 'Signing in…' : 'Sign in'}
           </button>
         </form>
-
-        <p className="hint">
-          Use credentials from TEST_USER_DATA.sql (e.g. lrignold0@a8.net)
-        </p>
       </div>
     </div>
   );
