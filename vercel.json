@@ -3,6 +3,12 @@
   "installCommand": "npm install && npm install --prefix client",
   "buildCommand": "npm run build",
   "outputDirectory": "client/dist",
+  "git": {
+    "deploymentEnabled": {
+      "main": true,
+      "dev": false
+    }
+  },
   "rewrites": [
     {
       "source": "/((?!api/).*)",
