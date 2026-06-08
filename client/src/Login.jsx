@@ -20,7 +20,13 @@ export default function Login() {
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await res.json();
+      let data;
+      try {
+        data = await res.json();
+      } catch {
+        setMessage({ type: 'error', text: 'Server returned an invalid response' });
+        return;
+      }
 
       if (res.ok && data.success) {
         setLoggedIn(true);
@@ -33,7 +39,7 @@ export default function Login() {
         setMessage({ type: 'error', text: data.message || 'Login failed' });
       }
     } catch {
-      setMessage({ type: 'error', text: 'Unable to reach server. Is the backend running?' });
+      setMessage({ type: 'error', text: 'Unable to reach server. Please try again.' });
     } finally {
       setLoading(false);
     }

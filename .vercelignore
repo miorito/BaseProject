@@ -1,4 +1,4 @@
 server/
+.git
 Dockerfile
 docker-compose.yml
-.git
